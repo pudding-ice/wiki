@@ -2,8 +2,13 @@
   <a-layout>
     <!--头部组件-->
     <TheHeader></TheHeader>
-<!--    路由组件-->
-    <router-view/>
+    <a-layout-content style="padding: 0 50px">
+      <a-layout style="padding: 24px 0; background: #fff">
+        <TheSider></TheSider>
+        <!--    路由组件-->
+        <router-view/>
+      </a-layout>
+    </a-layout-content>
     <!--    底部组件-->
     <TheFooter></TheFooter>
   </a-layout>
@@ -23,6 +28,7 @@ export default defineComponent({
     NotificationOutlined,
     TheHeader,
     TheFooter,
+    TheSider,
   },
   setup() {
     onMounted(() => {
