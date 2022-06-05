@@ -19,7 +19,6 @@ import {defineComponent, onMounted, ref} from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import TheSider from '@/components/TheSider.vue';
-import https from '@/api/https.js'
 
 export default defineComponent({
   components: {
@@ -32,12 +31,12 @@ export default defineComponent({
   },
   setup() {
     onMounted(() => {
-      https.fetchGet('/ebook/list', {name: ''}).then((res) => {
-        console.log(res)
-      }).catch(err => {
-            console.log(err)
-          }
-      );
+      // https.fetchGet('/ebook/list', {name: ''}).then((res) => {
+      //   console.log(res)
+      // }).catch(err => {
+      //       console.log(err)
+      //     }
+      // );
     })
     // https.fetchPost('/xxx/xxx',this.form).then((res) => {
     //   console.log(res)
