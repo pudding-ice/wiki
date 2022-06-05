@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.timeout = 5000;                        //响应时间
-axios.defaults.baseURL = 'http://localhost:8080';   //配置接口地址
+axios.defaults.baseURL = process.env.VUE_APP_SERVER;   //配置接口地址
 
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use((config) => {

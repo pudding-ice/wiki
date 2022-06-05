@@ -15,7 +15,7 @@
 </template>
 <script lang="ts">
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons-vue';
-import {defineComponent, onMounted, ref} from 'vue';
+import {defineComponent, ref} from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import TheSider from '@/components/TheSider.vue';
@@ -30,21 +30,6 @@ export default defineComponent({
     TheSider,
   },
   setup() {
-    onMounted(() => {
-      // https.fetchGet('/ebook/list', {name: ''}).then((res) => {
-      //   console.log(res)
-      // }).catch(err => {
-      //       console.log(err)
-      //     }
-      // );
-    })
-    // https.fetchPost('/xxx/xxx',this.form).then((res) => {
-    //   console.log(res)
-    // }).catch(err=>{
-    //       console.log(err)
-    //     }
-    // )
-
     return {
       selectedKeys1: ref<string[]>(['2']),
       selectedKeys2: ref<string[]>(['1']),
