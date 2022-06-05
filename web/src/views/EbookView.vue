@@ -1,6 +1,7 @@
 <template>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-        <a-list :data-source="listData" :pagination="pagination" item-layout="vertical" size="large">
+        <a-list :data-source="listData" :pagination="pagination" grid="{ gutter: 50, column: 3 }" item-layout="vertical"
+                size="large">
           <template #renderItem="{ item }">
             <a-list-item key="item.title">
               <template #actions>
