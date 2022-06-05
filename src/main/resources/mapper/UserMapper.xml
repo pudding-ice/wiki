@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myjava.wiki.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.myjava.wiki.domain.User">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="CHAR" property="password"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myjava.wiki.domain.User">
+        insert into user (id, login_name, `name`,
+                          `password`)
+        values (#{id,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+                #{password,jdbcType=CHAR})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.myjava.wiki.domain.User">
+        update user
+        set login_name = #{loginName,jdbcType=VARCHAR},
+            `name`     = #{name,jdbcType=VARCHAR},
+            `password` = #{password,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, login_name, `name`, `password`
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, login_name, `name`, `password`
+        from user
+    </select>
+</mapper>

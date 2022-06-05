@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myjava.wiki.mapper.CategoryMapper">
+    <resultMap id="BaseResultMap" type="com.myjava.wiki.domain.Category">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent" jdbcType="BIGINT" property="parent"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from category
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myjava.wiki.domain.Category">
+        insert into category (id, parent, `name`,
+                              sort)
+        values (#{id,jdbcType=BIGINT}, #{parent,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+                #{sort,jdbcType=INTEGER})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.myjava.wiki.domain.Category">
+        update category
+        set parent = #{parent,jdbcType=BIGINT},
+            `name` = #{name,jdbcType=VARCHAR},
+            sort   = #{sort,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, parent, `name`, sort
+        from category
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, parent, `name`, sort
+        from category
+    </select>
+</mapper>

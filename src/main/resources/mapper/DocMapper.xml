@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myjava.wiki.mapper.DocMapper">
+    <resultMap id="BaseResultMap" type="com.myjava.wiki.domain.Doc">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="ebook_id" jdbcType="BIGINT" property="ebookId"/>
+        <result column="parent" jdbcType="BIGINT" property="parent"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="vote_count" jdbcType="INTEGER" property="voteCount"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from doc
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.myjava.wiki.domain.Doc">
+        insert into doc (id, ebook_id, parent,
+                         `name`, sort, view_count,
+                         vote_count)
+        values (#{id,jdbcType=BIGINT}, #{ebookId,jdbcType=BIGINT}, #{parent,jdbcType=BIGINT},
+                #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER},
+                #{voteCount,jdbcType=INTEGER})
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.myjava.wiki.domain.Doc">
+        update doc
+        set ebook_id   = #{ebookId,jdbcType=BIGINT},
+            parent     = #{parent,jdbcType=BIGINT},
+            `name`     = #{name,jdbcType=VARCHAR},
+            sort       = #{sort,jdbcType=INTEGER},
+            view_count = #{viewCount,jdbcType=INTEGER},
+            vote_count = #{voteCount,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, ebook_id, parent, `name`, sort, view_count, vote_count
+        from doc
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select id, ebook_id, parent, `name`, sort, view_count, vote_count
+        from doc
+    </select>
+</mapper>
