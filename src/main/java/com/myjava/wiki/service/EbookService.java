@@ -5,5 +5,5 @@ import com.myjava.wiki.domain.Ebook;
 import java.util.List;
 
 public interface EbookService {
-    List<Ebook> getAllEbook();
+    List<Ebook> getAllEbook(String name);
 }

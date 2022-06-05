@@ -14,7 +14,8 @@ public class EbookServiceImpl implements EbookService {
     EbookMapper mapper;
 
     @Override
-    public List<Ebook> getAllEbook() {
-        return mapper.selectAll();
+    public List<Ebook> getAllEbook(String name) {
+        String queryName = "%" + name + "%";
+        return mapper.selectAll(queryName);
     }
 }

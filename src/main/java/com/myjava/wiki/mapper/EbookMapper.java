@@ -1,9 +1,11 @@
 package com.myjava.wiki.mapper;
 
 import com.myjava.wiki.domain.Ebook;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface EbookMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -11,7 +13,7 @@ public interface EbookMapper {
 
     Ebook selectByPrimaryKey(Long id);
 
-    List<Ebook> selectAll();
+    List<Ebook> selectAll(String name);
 
     int updateByPrimaryKey(Ebook record);
 }

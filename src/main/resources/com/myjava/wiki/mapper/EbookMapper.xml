@@ -61,5 +61,6 @@
                view_count,
                vote_count
         from ebook
+        where `name` like #{name}
     </select>
 </mapper>
