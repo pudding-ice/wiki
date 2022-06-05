@@ -39,7 +39,8 @@ export default defineComponent({
     const ebooks = ref()
 
     onMounted(() => {
-      request.fetchGet('/ebook/list', {name: ''}).then((res) => {
+      const queryText = ''
+      request.fetchGet('/ebook/list', {name: queryText}).then((res) => {
         ebooks.value = res.data.content;
       })
     })
