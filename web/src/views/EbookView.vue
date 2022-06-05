@@ -27,7 +27,7 @@
 <script lang="ts">
 import {LikeOutlined, MessageOutlined, StarOutlined} from '@ant-design/icons-vue';
 import {defineComponent, onMounted, ref} from 'vue';
-import request from '@/api/https.js';
+import request from '@/api/axiosRequest.js';
 
 export default defineComponent({
   components: {
