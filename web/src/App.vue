@@ -10,7 +10,7 @@
 </template>
 <script lang="ts">
 import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons-vue';
-import {defineComponent, ref} from 'vue';
+import {defineComponent, onMounted, ref} from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import TheSider from '@/components/TheSider.vue';
@@ -25,13 +25,14 @@ export default defineComponent({
     TheFooter,
   },
   setup() {
-    https.fetchGet('/ebook/list', {name: ''}).then((res) => {
-      console.log(res)
-    }).catch(err => {
-          console.log(err)
-        }
-    );
-
+    onMounted(() => {
+      https.fetchGet('/ebook/list', {name: ''}).then((res) => {
+        console.log(res)
+      }).catch(err => {
+            console.log(err)
+          }
+      );
+    })
     // https.fetchPost('/xxx/xxx',this.form).then((res) => {
     //   console.log(res)
     // }).catch(err=>{
