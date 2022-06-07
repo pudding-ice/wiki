@@ -3,10 +3,15 @@ package com.myjava.wiki.domain.response;
 import lombok.Data;
 
 @Data
-public class CommonResponse<T> {
+public class CommonResponse {
     private boolean success = true;
-
     private String message;
 
-    private T content;
+    public CommonResponse() {
+    }
+
+    public CommonResponse(boolean success, String message) {
+        this.success = success;
+        this.message = message;
+    }
 }

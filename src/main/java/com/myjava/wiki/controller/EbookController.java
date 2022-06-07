@@ -19,12 +19,12 @@ public class EbookController {
     EbookService service;
 
     @GetMapping("/getAll")
-    public CommonResponse getAllBook(String name) {
+    public PageListResp<Ebook> getAllBook(String name) {
         List<Ebook> allEbook = service.getAllEbook(name);
-        CommonResponse<List<Ebook>> response = new CommonResponse<>();
-        response.setContent(allEbook);
-        response.setMessage("获取所有书籍成功");
-        return response;
+        PageListResp<Ebook> pageListResp = new PageListResp<>();
+        pageListResp.setDataList(allEbook);
+        pageListResp.setResponse(new CommonResponse(true, "获取所有书籍成功"));
+        return pageListResp;
     }
 
     @GetMapping("/getList")

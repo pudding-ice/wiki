@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.myjava.wiki.domain.Ebook;
 import com.myjava.wiki.domain.request.PageRequest;
-import com.myjava.wiki.domain.response.AxiosRespMessage;
+import com.myjava.wiki.domain.response.CommonResponse;
 import com.myjava.wiki.domain.response.PageListResp;
 import com.myjava.wiki.mapper.EbookMapper;
 import com.myjava.wiki.service.EbookService;
@@ -31,8 +31,7 @@ public class EbookServiceImpl implements EbookService {
         PageListResp<Ebook> resp = new PageListResp<>();
         resp.setDataList(ebooks);
         resp.setTotal(pageInfo.getTotal());
-        AxiosRespMessage axiosRespMessage = new AxiosRespMessage(true, "获取数据列表成功");
-        resp.setRespMessage(axiosRespMessage);
+        resp.setResponse(new CommonResponse(true, "获取数据列表成功"));
         return resp;
     }
 }

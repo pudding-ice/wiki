@@ -176,13 +176,13 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
-        if (data.respMessage.success) {
+        if (data.response.success) {
           ebooks.value = data.dataList;
           // 重置分页按钮
           pagination.value.current = params.current;
           pagination.value.total = data.total;
         } else {
-          message.error(data.respMessage.message);
+          message.error(data.response.message);
         }
       });
     };
