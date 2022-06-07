@@ -3,7 +3,7 @@
     <a-layout style="padding: 24px 0; background: #fff">
       <TheSider></TheSider>
       <a-layout-content :style="{ padding: '0 24px', minHeight: '280px' }">
-        <a-list :data-source="ebooks" :pagination="pagination" grid="{ gutter: 50, column: 3 }" item-layout="vertical"
+        <a-list :data-source="ebooks" grid="{ gutter: 50, column: 3 }" item-layout="vertical"
                 size="large">
           <template #renderItem="{ item }">
             <a-list-item key="item.title">
@@ -18,7 +18,8 @@
                   <a :href="item.href">{{ item.name }}</a>
                 </template>
                 <template #avatar>
-                  <a-avatar :src="item.cover"/>
+                  <!--                  <a-avatar :src="item.cover"/>-->
+                  <a-avatar :src="item.cover" shape="square" size="large"/>
                 </template>
               </a-list-item-meta>
             </a-list-item>
