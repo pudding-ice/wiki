@@ -31,16 +31,16 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar"/>
         </template>
-        <!--        <template v-slot:category="{ text, record }">-->
-        <!--          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>-->
-        <!--        </template>-->
+        <!--                <template v-slot:category="{ text, record }">-->
+        <!--                  <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>-->
+        <!--                </template>-->
         <template v-slot:action="{ text, record }">
           <a-space size="small">
-            <!--            <router-link :to="'/admin/doc?ebookId=' + record.id">-->
-            <!--              <a-button type="primary">-->
-            <!--                文档管理-->
-            <!--              </a-button>-->
-            <!--            </router-link>-->
+            <router-link :to="'/admin/doc?ebookId=' + record.id">
+              <a-button type="primary">
+                文档管理
+              </a-button>
+            </router-link>
             <a-button type="primary" @click="edit(record)">
               编辑
             </a-button>
@@ -61,9 +61,9 @@
   </a-layout>
 
   <a-modal
+      title="电子书表单"
       v-model:visible="modalVisible"
       :confirm-loading="modalLoading"
-      title="电子书表单"
       @ok="handleModalOk"
   >
     <a-form :label-col="{ span: 6 }" :model="ebook" :wrapper-col="{ span: 18 }">
@@ -71,12 +71,12 @@
         <a-input v-model:value="ebook.cover"/>
         <a-upload
             v-model:file-list="fileList"
-            :action="SERVER + '/ebook/upload/avatar'"
-            :before-upload="beforeUpload"
             :show-upload-list="false"
             class="avatar-uploader"
             list-type="picture-card"
             name="avatar"
+            :action="SERVER + '/ebook/upload/avatar'"
+            :before-upload="beforeUpload"
             @change="handleChange"
         >
           <img v-if="imageUrl" :src="imageUrl" alt="avatar"/>
@@ -109,6 +109,7 @@
 import {defineComponent, onMounted, ref} from 'vue';
 import {message} from 'ant-design-vue';
 import axiosRequest from "@/api/axiosRequest";
+import {Tool} from "@/util/tool";
 
 export default defineComponent({
   name: 'AdminEbook',
@@ -198,6 +199,48 @@ export default defineComponent({
       });
     };
 
+    // -------- 表单 ---------
+    /**
+     * 数组，[100, 101]对应：前端开发 / Vue
+     */
+    const categoryIds = ref();
+    const ebook = ref();
+    const modalVisible = ref(false);
+    const modalLoading = ref(false);
+    //点击OK时提交表单数据到后端
+    const handleModalOk = () => {
+      modalLoading.value = true;
+      ebook.value.category1Id = categoryIds.value[0];
+      ebook.value.category2Id = categoryIds.value[1];
+      console.log("电子书编辑信息id: " + ebook.value.id);
+      console.log("电子书编辑信息name: " + ebook.value.name);
+      axiosRequest.fetchPost("/ebook/update", ebook.value).then((response) => {
+        modalLoading.value = false;
+        const data = response.data;
+        if (data.success) {
+          modalVisible.value = false;
+          // 重新加载列表
+          handleQuery({
+            current: pagination.value.current,
+            pageSize: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
+
+    };
+
+    /**
+     * 编辑
+     */
+    const edit = (record: any) => {
+      modalVisible.value = true;
+      ebook.value = Tool.copy(record);
+      categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
+    };
+
+
     const SERVER = process.env.VUE_APP_SERVER;
     const fileList = ref([]);
     const coverLoading = ref<boolean>(false);
@@ -209,12 +252,18 @@ export default defineComponent({
       pagination,
       columns,
       loading,
+      handleTableChange,
       handleQuery,
+      edit,
+      handleModalOk,
+      ebook,
+      modalVisible,
+      modalLoading,
+      categoryIds,
       fileList,
       coverLoading,
       imageUrl,
-      SERVER,
-      handleTableChange
+      SERVER
     }
   }
 });

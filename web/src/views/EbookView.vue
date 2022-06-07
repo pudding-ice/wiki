@@ -50,7 +50,7 @@ export default defineComponent({
     onMounted(() => {
       const queryText = ''
       request.fetchGet('/ebook/list', {name: queryText}).then((res) => {
-        ebooks.value = res.data.content;
+        ebooks.value = res.data.dataList;
       })
     })
 
