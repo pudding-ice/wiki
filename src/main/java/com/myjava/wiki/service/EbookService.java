@@ -14,4 +14,6 @@ public interface EbookService {
 
 
     CommonResponse updateEbook(Ebook ebook);
+
+    CommonResponse addEbook(Ebook ebook);
 }

@@ -31,7 +31,7 @@ public class EbookServiceImpl implements EbookService {
         PageListResp<Ebook> resp = new PageListResp<>();
         resp.setDataList(ebooks);
         resp.setTotal(pageInfo.getTotal());
-        resp.setResponse(new CommonResponse(true, "获取数据列表成功"));
+        resp.setResponseContent(new CommonResponse(true, "获取数据列表成功"));
         return resp;
     }
 
@@ -43,6 +43,18 @@ public class EbookServiceImpl implements EbookService {
             response = new CommonResponse(true, "更新电子书成功");
         } else {
             response = new CommonResponse(false, "更新电子书失败");
+        }
+        return response;
+    }
+
+    @Override
+    public CommonResponse addEbook(Ebook ebook) {
+        CommonResponse response = null;
+        int insert = mapper.insert(ebook);
+        if (insert > 0) {
+            response = new CommonResponse(true, "新增电子书成功");
+        } else {
+            response = new CommonResponse(false, "新增电子书失败");
         }
         return response;
     }
