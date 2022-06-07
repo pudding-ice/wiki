@@ -26,6 +26,7 @@
           :data-source="ebooks"
           :loading="loading"
           :pagination="pagination"
+          @change="handleTableChange"
       >
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar"/>
@@ -186,6 +187,16 @@ export default defineComponent({
       });
     };
 
+    /**
+     * 表格点击页码时触发
+     */
+    const handleTableChange = (pagination: any) => {
+      // console.log("看看自带的分页参数都有啥：" + pagination);
+      handleQuery({
+        current: pagination.current,
+        pageSize: pagination.pageSize
+      });
+    };
 
     const SERVER = process.env.VUE_APP_SERVER;
     const fileList = ref([]);
@@ -202,7 +213,8 @@ export default defineComponent({
       fileList,
       coverLoading,
       imageUrl,
-      SERVER
+      SERVER,
+      handleTableChange
     }
   }
 });
