@@ -167,18 +167,20 @@ export default defineComponent({
       ebooks.value = [];
       axiosRequest.fetchGet('/ebook/getList', {
         current: params.current,
+        // pageSize: params.pageSize,
         pageSize: params.pageSize,
         name: param.value.name
       }).then((response) => {
         loading.value = false;
         const data = response.data;
-        if (data.responseContent.success) {
+        if (data.resposeMessage.success) {
           ebooks.value = data.dataList;
           // 重置分页按钮
           pagination.value.current = params.current;
           pagination.value.total = data.total;
         } else {
-          message.error(data.responseContent.message);
+          console.log("错误")
+          message.error(data.resposeMessage.message);
         }
       });
     };
@@ -268,7 +270,7 @@ export default defineComponent({
       axiosRequest.fetchGet("/category/getAll").then((response) => {
         loading.value = false;
         const data = response.data;
-        if (data.responseContent.success) {
+        if (data.resposeMessage.success) {
           console.log("获取所有分类成功")
           categorys = data.dataList;
           level1.value = [];
@@ -280,7 +282,7 @@ export default defineComponent({
             pageSize: pagination.value.pageSize,
           });
         } else {
-          message.error(data.responseContent.message);
+          message.error(data.resposeMessage.message);
         }
       });
     };

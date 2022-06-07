@@ -8,7 +8,7 @@ import java.util.List;
 public class PageListResp<T> {
     private Long total;
 
-    private CommonResponse responseContent;
+    private ResposeMessage resposeMessage;
 
     private List<T> dataList;
 }

@@ -3,7 +3,7 @@ Accept: application/json
 
 ###分隔符
 
-GET http://localhost:8080/ebook/getList?current=1&pageSize=10
+GET http://localhost:8080/ebook/getList?current=1&pageSize=1000
 Accept: application/json
 
 ###

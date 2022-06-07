@@ -2,7 +2,7 @@ package com.myjava.wiki.service.Impl;
 
 import com.myjava.wiki.domain.Category;
 import com.myjava.wiki.domain.response.CommonResponse;
-import com.myjava.wiki.domain.response.PageListResp;
+import com.myjava.wiki.domain.response.ResposeMessage;
 import com.myjava.wiki.mapper.CategoryMapper;
 import com.myjava.wiki.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageListResp<Category> getAll() {
+    public CommonResponse<Category> getAll() {
         List<Category> categories = mapper.selectAll();
-        PageListResp<Category> pageListResp = new PageListResp<>();
+        CommonResponse<Category> pageListResp = new CommonResponse<>();
         pageListResp.setDataList(categories);
-        pageListResp.setResponseContent(new CommonResponse(true, "获取成功"));
+        pageListResp.setResposeMessage(new ResposeMessage(true, "获取分类成功"));
         return pageListResp;
     }
 }

@@ -2,13 +2,14 @@ package com.myjava.wiki.controller;
 
 import com.myjava.wiki.domain.Ebook;
 import com.myjava.wiki.domain.request.PageRequest;
-import com.myjava.wiki.domain.response.CommonResponse;
 import com.myjava.wiki.domain.response.PageListResp;
+import com.myjava.wiki.domain.response.ResposeMessage;
 import com.myjava.wiki.service.EbookService;
 import com.myjava.wiki.utils.SnowFlake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController()
@@ -22,12 +23,11 @@ public class EbookController {
         List<Ebook> allEbook = service.getAllEbook(name);
         PageListResp<Ebook> pageListResp = new PageListResp<>();
         pageListResp.setDataList(allEbook);
-        pageListResp.setResponseContent(new CommonResponse(true, "获取所有书籍成功"));
         return pageListResp;
     }
 
     @GetMapping("/getList")
-    public PageListResp<Ebook> getEbookList(PageRequest request) {
+    public PageListResp<Ebook> getEbookList(@Valid PageRequest request) {
         PageListResp<Ebook> ebookList = service.getEbookList(request);
         return ebookList;
     }
@@ -38,8 +38,8 @@ public class EbookController {
      * @return 返回结果对象
      */
     @PostMapping("/save")
-    public CommonResponse updateEbook(@RequestBody Ebook ebook) {
-        CommonResponse response = null;
+    public ResposeMessage updateEbook(@RequestBody Ebook ebook) {
+        ResposeMessage response = null;
         if (ebook.getId() == null) {
             //新增操作
             //使用雪花算法生成id
@@ -53,9 +53,9 @@ public class EbookController {
     }
 
     @RequestMapping("/delete")
-    public CommonResponse delete(Long id) {
+    public ResposeMessage delete(Long id) {
         System.out.println(id);
-        CommonResponse response = service.deleteById(id);
+        ResposeMessage response = service.deleteById(id);
         return response;
     }
 }
