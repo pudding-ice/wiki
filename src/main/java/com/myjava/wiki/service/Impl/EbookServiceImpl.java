@@ -59,5 +59,17 @@ public class EbookServiceImpl implements EbookService {
         return response;
     }
 
+    @Override
+    public CommonResponse deleteById(Long id) {
+        int i = mapper.deleteByPrimaryKey(id);
+        CommonResponse response = null;
+        if (i > 0) {
+            response = new CommonResponse(true, "删除成功");
+        } else {
+            response = new CommonResponse(false, "删除失败");
+        }
+        return response;
+    }
+
 
 }

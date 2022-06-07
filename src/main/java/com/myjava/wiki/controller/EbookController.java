@@ -51,4 +51,11 @@ public class EbookController {
         }
         return response;
     }
+
+    @RequestMapping("/delete")
+    public CommonResponse delete(Long id) {
+        System.out.println(id);
+        CommonResponse response = service.deleteById(id);
+        return response;
+    }
 }

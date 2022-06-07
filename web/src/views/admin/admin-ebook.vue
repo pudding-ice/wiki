@@ -23,6 +23,7 @@
       </p>
       <a-table
           :columns="columns"
+          :rowKey="record => record.id"
           :data-source="ebooks"
           :loading="loading"
           :pagination="pagination"
@@ -240,6 +241,23 @@ export default defineComponent({
     };
 
 
+    const handleDelete = (id: number) => {
+      axiosRequest.fetchGet("/ebook/delete", {
+        id: id
+      }).then((response) => {
+        const data = response.data; // data = commonResp
+        if (data.success) {
+          // 重新加载列表
+          handleQuery({
+            current: pagination.value.current,
+            pageSize: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.message);
+        }
+      });
+    };
+
     const level1 = ref();
     let categorys: any;
     /**
@@ -298,6 +316,7 @@ export default defineComponent({
       add,
       edit,
       handleModalOk,
+      handleDelete,
 
       ebook,
       modalVisible,
