@@ -1,7 +1,9 @@
 package com.myjava.wiki.controller;
 
 import com.myjava.wiki.domain.Ebook;
+import com.myjava.wiki.domain.request.PageRequest;
 import com.myjava.wiki.domain.response.CommonResponse;
+import com.myjava.wiki.domain.response.PageListResp;
 import com.myjava.wiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +18,18 @@ public class EbookController {
     @Autowired
     EbookService service;
 
-    @GetMapping("/list")
+    @GetMapping("/getAll")
     public CommonResponse getAllBook(String name) {
         List<Ebook> allEbook = service.getAllEbook(name);
         CommonResponse<List<Ebook>> response = new CommonResponse<>();
         response.setContent(allEbook);
         response.setMessage("获取所有书籍成功");
         return response;
+    }
+
+    @GetMapping("/getList")
+    public PageListResp<Ebook> getEbookList(PageRequest request) {
+        PageListResp<Ebook> ebookList = service.getEbookList(request);
+        return ebookList;
     }
 }

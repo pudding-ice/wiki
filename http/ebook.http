@@ -1,5 +1,7 @@
-GET http://localhost:8080/ebook/list
+GET http://localhost:8080/ebook/getAll
 Accept: application/json
 
+###分隔符
 
-###
+GET http://localhost:8080/ebook/getList?current=1&pageSize=10
+Accept: application/json
