@@ -6,9 +6,7 @@ import com.myjava.wiki.domain.response.CommonResponse;
 import com.myjava.wiki.domain.response.PageListResp;
 import com.myjava.wiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class EbookController {
     @Autowired
     EbookService service;
 
-    @GetMapping("/getAll")
+    @GetMapping("/list")
     public PageListResp<Ebook> getAllBook(String name) {
         List<Ebook> allEbook = service.getAllEbook(name);
         PageListResp<Ebook> pageListResp = new PageListResp<>();
@@ -31,5 +29,11 @@ public class EbookController {
     public PageListResp<Ebook> getEbookList(PageRequest request) {
         PageListResp<Ebook> ebookList = service.getEbookList(request);
         return ebookList;
+    }
+
+    @PostMapping("/update")
+    public CommonResponse updateEbook(@RequestBody Ebook ebook) {
+        CommonResponse response = service.updateEbook(ebook);
+        return response;
     }
 }

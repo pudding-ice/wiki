@@ -34,4 +34,18 @@ public class EbookServiceImpl implements EbookService {
         resp.setResponse(new CommonResponse(true, "获取数据列表成功"));
         return resp;
     }
+
+    @Override
+    public CommonResponse updateEbook(Ebook ebook) {
+        int i = mapper.updateByPrimaryKey(ebook);
+        CommonResponse response = null;
+        if (i > 0) {
+            response = new CommonResponse(true, "更新电子书成功");
+        } else {
+            response = new CommonResponse(false, "更新电子书失败");
+        }
+        return response;
+    }
+
+
 }
