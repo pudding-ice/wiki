@@ -2,13 +2,8 @@
   <a-layout>
     <!--头部组件-->
     <TheHeader></TheHeader>
-    <a-layout-content style="padding: 0 50px">
-      <a-layout style="padding: 24px 0; background: #fff">
-        <TheSider></TheSider>
         <!--    路由组件-->
         <router-view/>
-      </a-layout>
-    </a-layout-content>
     <!--    底部组件-->
     <TheFooter></TheFooter>
   </a-layout>
@@ -18,7 +13,6 @@ import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/ic
 import {defineComponent, ref} from 'vue';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
-import TheSider from '@/components/TheSider.vue';
 
 export default defineComponent({
   components: {
@@ -26,8 +20,7 @@ export default defineComponent({
     LaptopOutlined,
     NotificationOutlined,
     TheHeader,
-    TheFooter,
-    TheSider,
+    TheFooter
   },
   setup() {
     return {
