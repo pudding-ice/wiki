@@ -31,9 +31,9 @@
         <template #cover="{ text: cover }">
           <img v-if="cover" :src="cover" alt="avatar"/>
         </template>
-        <!--                <template v-slot:category="{ text, record }">-->
-        <!--                  <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>-->
-        <!--                </template>-->
+        <template v-slot:category="{ text, record }">
+          <span>{{ getCategoryName(record.category1Id) }} / {{ getCategoryName(record.category2Id) }}</span>
+        </template>
         <template v-slot:action="{ text, record }">
           <a-space size="small">
             <router-link :to="'/admin/doc?ebookId=' + record.id">
@@ -157,12 +157,6 @@ export default defineComponent({
       }
     ];
 
-    onMounted(() => {
-      handleQuery({
-        current: 1,
-        pageSize: pagination.value.pageSize,
-      });
-    })
     /**
      * 数据查询
      **/
@@ -177,13 +171,13 @@ export default defineComponent({
       }).then((response) => {
         loading.value = false;
         const data = response.data;
-        if (data.response.success) {
+        if (data.responseContent.success) {
           ebooks.value = data.dataList;
           // 重置分页按钮
           pagination.value.current = params.current;
           pagination.value.total = data.total;
         } else {
-          message.error(data.response.message);
+          message.error(data.responseContent.message);
         }
       });
     };
@@ -210,15 +204,13 @@ export default defineComponent({
     //点击OK时提交表单数据到后端
     const handleModalOk = () => {
       modalLoading.value = true;
-      ebook.value.category1Id = categoryIds.value[0];
-      ebook.value.category2Id = categoryIds.value[1];
-      console.log("电子书编辑信息id: " + ebook.value.id);
-      console.log("电子书编辑信息name: " + ebook.value.name);
-      axiosRequest.fetchPost("/ebook/update", ebook.value).then((response) => {
+      axiosRequest.fetchPost("/ebook/save", ebook.value).then((response) => {
         modalLoading.value = false;
         const data = response.data;
         if (data.success) {
           modalVisible.value = false;
+          ebook.value.category1Id = categoryIds.value[0];
+          ebook.value.category2Id = categoryIds.value[1];
           // 重新加载列表
           handleQuery({
             current: pagination.value.current,
@@ -232,6 +224,13 @@ export default defineComponent({
     };
 
     /**
+     * 新增
+     */
+    const add = () => {
+      modalVisible.value = true;
+      ebook.value = {};
+    };
+    /**
      * 编辑
      */
     const edit = (record: any) => {
@@ -240,6 +239,47 @@ export default defineComponent({
       categoryIds.value = [ebook.value.category1Id, ebook.value.category2Id]
     };
 
+
+    const level1 = ref();
+    let categorys: any;
+    /**
+     * 查询所有分类
+     **/
+    const handleQueryCategory = () => {
+      loading.value = true;
+      axiosRequest.fetchGet("/category/getAll").then((response) => {
+        loading.value = false;
+        const data = response.data;
+        if (data.responseContent.success) {
+          console.log("获取所有分类成功")
+          categorys = data.dataList;
+          level1.value = [];
+          level1.value = Tool.array2Tree(categorys, 0);
+          console.log(level1.value);
+          // 加载完分类后，再加载电子书，否则如果分类树加载很慢，则电子书渲染会报错
+          handleQuery({
+            current: 1,
+            pageSize: pagination.value.pageSize,
+          });
+        } else {
+          message.error(data.responseContent.message);
+        }
+      });
+    };
+
+    const getCategoryName = (cid: number) => {
+      let result = "";
+      categorys.forEach((item: any) => {
+        if (item.id === cid) {
+          // return item.name; // 注意，这里直接return不起作用
+          result = item.name;
+        }
+      });
+      return result;
+    };
+    onMounted(() => {
+      handleQueryCategory();
+    });
 
     const SERVER = process.env.VUE_APP_SERVER;
     const fileList = ref([]);
@@ -252,10 +292,13 @@ export default defineComponent({
       pagination,
       columns,
       loading,
+
       handleTableChange,
       handleQuery,
+      add,
       edit,
       handleModalOk,
+
       ebook,
       modalVisible,
       modalLoading,
@@ -263,7 +306,8 @@ export default defineComponent({
       fileList,
       coverLoading,
       imageUrl,
-      SERVER
+      SERVER,
+      getCategoryName
     }
   }
 });

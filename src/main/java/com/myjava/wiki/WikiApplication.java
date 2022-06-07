@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-@MapperScan("com.myjava.wiki.mapper")
+@MapperScan(basePackages = "com.myjava.wiki.mapper")
 public class WikiApplication {
     private static final Logger LOG = LoggerFactory.getLogger(WikiApplication.class);
 
