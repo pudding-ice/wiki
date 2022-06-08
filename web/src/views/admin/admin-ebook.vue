@@ -167,9 +167,8 @@ export default defineComponent({
       ebooks.value = [];
       axiosRequest.fetchGet('/ebook/getList', {
         current: params.current,
-        // pageSize: params.pageSize,
         pageSize: params.pageSize,
-        name: param.value.name
+        queryText: param.value.name
       }).then((response) => {
         loading.value = false;
         const data = response.data;

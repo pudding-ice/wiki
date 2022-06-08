@@ -26,7 +26,7 @@ public class EbookServiceImpl implements EbookService {
     @Override
     public PageListResp<Ebook> getEbookList(PageRequest page) {
         PageHelper.startPage(page.getCurrent(), page.getPageSize());
-        List<Ebook> ebooks = mapper.selectAll("");
+        List<Ebook> ebooks = mapper.selectAll(page.getQueryText());
         PageInfo<Ebook> pageInfo = new PageInfo<>(ebooks, page.getCurrent());
         PageListResp<Ebook> resp = new PageListResp<>();
         resp.setDataList(ebooks);
